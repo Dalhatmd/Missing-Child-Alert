@@ -16,6 +16,7 @@ type Alert struct {
 	Status		string		 	`json:"status"`
 	CreatedAt	time.Time	  `json:"created_at"`
 	TimeLost	time.Time	  `json:"time_lost"`
+	UserId		string		`json:"user_id"`
 }
 
 func NewAlert(childName string, age int, last_seen_location string, description string, photoUrl string, reporterContact string) *Alert {
@@ -28,6 +29,7 @@ func NewAlert(childName string, age int, last_seen_location string, description 
 		ReporterContact:  reporterContact,
 		Status:           "active",
 		CreatedAt:        time.Now(),
+		TimeLost:         time.Time{}, 
 	}
 }
 
@@ -52,6 +54,9 @@ func (a *Alert) Update(info Alert) {
 	}
 	if info.Status != "" {
 		a.Status = info.Status
+	}
+	if info.TimeLost != (time.Time{}) {
+		a.TimeLost = info.TimeLost
 	}
 }
 
