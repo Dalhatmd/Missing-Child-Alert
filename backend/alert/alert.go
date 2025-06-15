@@ -106,7 +106,9 @@ func (a *Alert) Update(info UpdateAlertRequest) error {
 		a.Age = *info.Age
 	}
 	if info.Gender != nil {
-		// Add validation for gender if needed
+		if info.Gender == nil || *info.Gender == "" {
+			return errors.New("Please provide gender")
+		}
 		a.Gender = *info.Gender
 	}
 	if info.LastSeenLocation != nil {
