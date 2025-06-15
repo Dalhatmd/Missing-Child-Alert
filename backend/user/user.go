@@ -14,6 +14,8 @@ type User struct {
 	Alerts []alert.Alert `gorm:"foreignKey:UserID" json:"alerts,omitempty"`
 }
 
+// newUser creates a new User instance with the provided details.
+
 func newUser(id int, username, email, password, location string) *User {
 	return &User{
 		ID:       id,
