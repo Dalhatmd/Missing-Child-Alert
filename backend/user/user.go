@@ -14,7 +14,7 @@ type User struct {
 	PasswordHash string `json:"password"`
 	Location string `json:"location"`
 	PhoneNumber string `json:"phone_number,omitempty"`
-	Alerts []alert.Alert `gorm:"foreignKey:UserID" json:"alerts,omitempty"`
+	Alerts []alert.Alert `gorm:"foreignKey:UserId;references:ID" json:"alerts,omitempty"`
 }
 
 // newUser creates a new User instance with the provided details.
@@ -80,4 +80,3 @@ func (u *User) Update(info UserDTO) error {
 	return nil
 }
 
-func CreateAlertHandler()

@@ -25,7 +25,7 @@ type Alert struct {
 	Gender		string		`json:"gender"`
 	Description	string		`json:"description"`
 	LastSeenLocation	string	`json:"last_seen_location"`
-	PhotoUrl 	string		`json:"PhotoUrl"`
+	PhotoUrl 	string		`json:"photo_url"`
 	ReporterContact	string   `json:"reporter_contact"`
 	CreatedAt	time.Time	  `json:"created_at"`
 	TimeLost	time.Time	  `json:"time_lost"`
