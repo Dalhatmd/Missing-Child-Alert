@@ -42,7 +42,7 @@ type UpdateAlertRequest struct {
     ReporterContact  *string    `json:"reporter_contact,omitempty"`
     Status           *AlertStatus `json:"status,omitempty"`
     TimeLost         *time.Time `json:"time_lost,omitempty"`
-	Gender			 *string     `json:"gender,omitempry"`
+	Gender			 *string     `json:"gender,omitempty"`
 }
 
 func NewAlert(

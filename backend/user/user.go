@@ -79,3 +79,5 @@ func (u *User) Update(info UserDTO) error {
 	}
 	return nil
 }
+
+func CreateAlertHandler()

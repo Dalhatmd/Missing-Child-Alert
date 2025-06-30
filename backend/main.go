@@ -4,9 +4,11 @@ import (
 	"fmt"
 	"time"
 	"github.com/dalhatmd/Missing-Child-Alert/alert" // Adjust import path if necessary
+	"github.com/dalhatmd/Missing-Child-Alert/db"
 )
 
 func main() {
+	db.ConnectDatabase()
 	fmt.Println("--- Testing NewAlert ---")
 
 	// Test Case 1: Valid Alert Creation
