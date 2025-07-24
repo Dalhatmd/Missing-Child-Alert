@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missing Child Alert System</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e0e0e0;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center p-4 sm:p-6 lg:p-8">
+
+    <!-- Header -->
+    <header class="w-full max-w-4xl bg-white shadow-lg rounded-xl p-6 mb-8 text-center">
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-blue-700 mb-2">Missing Child Alert</h1>
+        <p class="text-lg text-gray-600">Help us find missing children by reporting or viewing alerts.</p>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="w-full max-w-4xl grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+        <!-- Report Missing Child Form -->
+        <section class="bg-white shadow-lg rounded-xl p-6 sm:p-8">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 text-center">Report a Missing Child</h2>
+            <form id="missingChildForm" class="space-y-6">
+                <!-- Child's Name -->
+                <div>
+                    <label for="childName" class="block text-sm font-medium text-gray-700 mb-1">Child's Name</label>
+                    <input type="text" id="childName" name="childName" placeholder="e.g., Jane Doe" required
+                           class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-base">
+                </div>
+
+                <!-- Description -->
+                <div>
+                    <label for="childDescription" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                    <textarea id="childDescription" name="childDescription" rows="4" placeholder="e.g., Fair complexion, wearing a red t-shirt and blue jeans, has a small scar on left cheek." required
+                              class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-base resize-y"></textarea>
+                    <p class="mt-2 text-xs text-gray-500">Include details like complexion, clothing, and any distinguishing features.</p>
+                </div>
+
+                <!-- Picture Upload -->
+                <div>
+                    <label for="childPicture" class="block text-sm font-medium text-gray-700 mb-1">Child's Picture</label>
+                    <input type="file" id="childPicture" name="childPicture" accept="image/*" required
+                           class="mt-1 block w-full text-gray-700
+                                  file:mr-4 file:py-2 file:px-4
+                                  file:rounded-lg file:border-0
+                                  file:text-sm file:font-semibold
+                                  file:bg-blue-50 file:text-blue-700
+                                  hover:file:bg-blue-100">
+                    <p class="mt-2 text-xs text-gray-500">Upload a clear picture of the child.</p>
+                </div>
+
+                <!-- Last Seen Time -->
+                <div>
+                    <label for="lastSeenTime" class="block text-sm font-medium text-gray-700 mb-1">Last Seen Time</label>
+                    <input type="datetime-local" id="lastSeenTime" name="lastSeenTime" required
+                           class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-base">
+                </div>
+
+                <!-- Last Seen Location -->
+                <div>
+                    <label for="lastSeenLocation" class="block text-sm font-medium text-gray-700 mb-1">Last Seen Location</label>
+                    <input type="text" id="lastSeenLocation" name="lastSeenLocation" placeholder="e.g., Central Park, New York" required
+                           class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-base">
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit"
+                        class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-lg font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
+                               transition duration-150 ease-in-out">
+                    Submit Alert
+                </button>
+            </form>
+
+            <!-- Submission Message -->
+            <div id="submissionMessage" class="mt-4 p-3 bg-green-100 text-green-700 rounded-lg text-center hidden" role="alert">
+                Alert submitted successfully!
+            </div>
+        </section>
+
+        <!-- Recent Alerts Display -->
+        <section class="bg-white shadow-lg rounded-xl p-6 sm:p-8">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 text-center">Recent Alerts</h2>
+            <div id="alertsContainer" class="space-y-6 max-h-[600px] overflow-y-auto pr-2">
+                <!-- Example Alert 1 -->
+                <div class="flex flex-col sm:flex-row items-center bg-gray-50 p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200">
+                    <img src="https://placehold.co/100x100/ADD8E6/000000?text=Child+1" alt="Child 1" class="w-24 h-24 rounded-full object-cover mb-4 sm:mb-0 sm:mr-4 border-2 border-blue-300">
+                    <div class="text-center sm:text-left">
+                        <h3 class="text-xl font-semibold text-blue-800">Emily Johnson</h3>
+                        <p class="text-gray-600 text-sm">Last Seen: <span class="font-medium">2025-07-23 14:30</span></p>
+                        <p class="text-gray-600 text-sm">Location: <span class="font-medium">Maple Street Park, Anytown</span></p>
+                        <p class="text-gray-600 text-sm mt-1">Description: <span class="font-medium">Blonde hair, blue eyes, wearing a pink dress.</span></p>
+                    </div>
+                </div>
+
+                <!-- Example Alert 2 -->
+                <div class="flex flex-col sm:flex-row items-center bg-gray-50 p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200">
+                    <img src="https://placehold.co/100x100/ADD8E6/000000?text=Child+2" alt="Child 2" class="w-24 h-24 rounded-full object-cover mb-4 sm:mb-0 sm:mr-4 border-2 border-blue-300">
+                    <div class="text-center sm:text-left">
+                        <h3 class="text-xl font-semibold text-blue-800">Michael Brown</h3>
+                        <p class="text-gray-600 text-sm">Last Seen: <span class="font-medium">2025-07-22 09:00</span></p>
+                        <p class="text-gray-600 text-sm">Location: <span class="font-medium">Oakwood Elementary School, Anytown</span></p>
+                        <p class="text-gray-600 text-sm mt-1">Description: <span class="font-medium">Brown hair, glasses, wearing a green t-shirt and shorts.</span></p>
+                    </div>
+                </div>
+
+                <!-- Example Alert 3 -->
+                <div class="flex flex-col sm:flex-row items-center bg-gray-50 p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200">
+                    <img src="https://placehold.co/100x100/ADD8E6/000000?text=Child+3" alt="Child 3" class="w-24 h-24 rounded-full object-cover mb-4 sm:mb-0 sm:mr-4 border-2 border-blue-300">
+                    <div class="text-center sm:text-left">
+                        <h3 class="text-xl font-semibold text-blue-800">Sophia Lee</h3>
+                        <p class="text-gray-600 text-sm">Last Seen: <span class="font-medium">2025-07-21 18:45</span></p>
+                        <p class="text-gray-600 text-sm">Location: <span class="font-medium">Community Library, Anytown</span></p>
+                        <p class="text-gray-600 text-sm mt-1">Description: <span class="font-medium">Black hair, average build, wearing a yellow raincoat.</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('missingChildForm');
+            const submissionMessage = document.getElementById('submissionMessage');
+            const alertsContainer = document.getElementById('alertsContainer');
+
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault(); // Prevent default form submission
+
+                // Collect form data
+                const childName = document.getElementById('childName').value;
+                const childDescription = document.getElementById('childDescription').value; // New field
+                const childPictureFile = document.getElementById('childPicture').files[0];
+                const lastSeenTime = document.getElementById('lastSeenTime').value;
+                const lastSeenLocation = document.getElementById('lastSeenLocation').value;
+
+                // Basic validation
+                if (!childName || !childDescription || !childPictureFile || !lastSeenTime || !lastSeenLocation) {
+                    // In a real app, you'd show a user-friendly error message
+                    console.error("Please fill in all fields and select a picture.");
+                    return;
+                }
+
+                // For demonstration, we'll log the data and simulate a successful submission.
+                // In a real application, you would send this data to your backend API.
+                console.log({
+                    childName,
+                    childDescription, // Include new field
+                    lastSeenTime,
+                    lastSeenLocation,
+                    pictureFileName: childPictureFile ? childPictureFile.name : 'No file selected'
+                });
+
+                // Simulate API call delay
+                await new Promise(resolve => setTimeout(resolve, 1000));
+
+                // Show success message
+                submissionMessage.classList.remove('hidden');
+                form.reset(); // Clear the form
+
+                // Hide message after a few seconds
+                setTimeout(() => {
+                    submissionMessage.classList.add('hidden');
+                }, 3000);
+
+                // Optionally, add the new alert to the display section (for frontend demo purposes)
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const newAlertHtml = `
+                        <div class="flex flex-col sm:flex-row items-center bg-gray-50 p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200">
+                            <img src="${e.target.result}" alt="${childName}" class="w-24 h-24 rounded-full object-cover mb-4 sm:mb-0 sm:mr-4 border-2 border-blue-300">
+                            <div class="text-center sm:text-left">
+                                <h3 class="text-xl font-semibold text-blue-800">${childName}</h3>
+                                <p class="text-gray-600 text-sm">Last Seen: <span class="font-medium">${lastSeenTime.replace('T', ' ')}</span></p>
+                                <p class="text-gray-600 text-sm">Location: <span class="font-medium">${lastSeenLocation}</span></p>
+                                <p class="text-gray-600 text-sm mt-1">Description: <span class="font-medium">${childDescription}</span></p>
+                            </div>
+                        </div>
+                    `;
+                    alertsContainer.insertAdjacentHTML('afterbegin', newAlertHtml); // Add to the top
+                };
+                reader.readAsDataURL(childPictureFile);
+            });
+        });
+    </script>
+</body>
+</html>
