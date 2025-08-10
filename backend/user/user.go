@@ -10,7 +10,8 @@ import (
 
 type User struct {
 	ID           string        `json:"id"`
-	Username     string        `json:"username"`
+	FirstName    string        `json:"first_name"`
+	LastName     string        `json:"last_name"`
 	Email        string        `json:"email"`
 	PasswordHash string        `json:"password"`
 	Location     string        `json:"location"`
@@ -20,10 +21,7 @@ type User struct {
 
 // newUser creates a new User instance with the provided details.
 
-func NewUser(id string, username, email, password, location string) (*User, error) {
-	if username == "" {
-		return nil, errors.New("username cannot be empty")
-	}
+func NewUser(id string, first_name, last_name, email, password, location string) (*User, error) {
 	if email == "" {
 		return nil, errors.New("email cannot be empty")
 	}
@@ -36,7 +34,8 @@ func NewUser(id string, username, email, password, location string) (*User, erro
 	}
 	return &User{
 		ID:           id,
-		Username:     username,
+		FirstName:    first_name,
+		LastName:     last_name,
 		Email:        email,
 		PasswordHash: string(hashedPassword),
 		Location:     location,
@@ -45,7 +44,8 @@ func NewUser(id string, username, email, password, location string) (*User, erro
 
 // DTO for User represents the data transfer object for a user.
 type UserDTO struct {
-	Username    *string `json:"username"`
+	FirstName   *string `json:"firstName"`
+	LastName    *string `json:"lastName"`
 	Email       *string `json:"email"`
 	Password    *string `json:"password,omitempty"`
 	Location    *string `json:"location"`
@@ -53,11 +53,11 @@ type UserDTO struct {
 }
 
 func (u *User) Update(info UserDTO) error {
-	if info.Username != nil {
-		if *info.Username == "" {
-			return errors.New("username cannot be empty")
-		}
-		u.Username = *info.Username
+	if info.FirstName != nil {
+		u.FirstName = *info.FirstName
+	}
+	if info.LastName != nil {
+		u.LastName = *info.LastName
 	}
 	if info.Email != nil {
 		if *info.Email == "" {
@@ -89,7 +89,8 @@ func CheckPassword(hashedPassword, password string) error {
 // UserResponse is a safe struct for returning user data in API responses (no password hash).
 type UserResponse struct {
 	ID          string        `json:"id"`
-	Username    string        `json:"username"`
+	FirstName   string        `json:"first_name"`
+	LastName    string        `json:"last_name"`
 	Email       string        `json:"email"`
 	Location    string        `json:"location"`
 	PhoneNumber string        `json:"phone_number,omitempty"`

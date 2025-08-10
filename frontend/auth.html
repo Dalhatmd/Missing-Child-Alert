@@ -103,10 +103,18 @@
             </div>
 
             <form id="signupForm" class="space-y-6">
-                <!-- Username (Optional) -->
+                <!-- First Name (Optional) -->
                 <div>
-                    <label for="signupUsername" class="block text-sm font-medium text-gray-700 mb-1">Username (Optional)</label>
-                    <input type="text" id="signupUsername" name="username" placeholder="Choose a username"
+                    <label for="signupFirstName" class="block text-sm font-medium text-gray-700 mb-1">First Name (Optional)</label>
+                    <input type="text" id="signupFirstName" name="firstName" placeholder="Enter your first name"
+                           class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-base">
+                    <p class="mt-1 text-xs text-gray-500">You can add this later in your profile.</p>
+                </div>
+
+                <!-- Last Name (Optional) -->
+                <div>
+                    <label for="signupLastName" class="block text-sm font-medium text-gray-700 mb-1">Last Name (Optional)</label>
+                    <input type="text" id="signupLastName" name="lastName" placeholder="Enter your last name"
                            class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-base">
                     <p class="mt-1 text-xs text-gray-500">You can add this later in your profile.</p>
                 </div>
@@ -218,7 +226,7 @@
                         
                         // Redirect after a delay
                         setTimeout(() => {
-                            window.location.href = 'index.html';
+                            window.location.href = '/';
                         }, 1500);
                     } else {
                         const errorData = await response.json();
@@ -237,7 +245,8 @@
                 event.preventDefault();
                 clearMessages();
 
-                const username = document.getElementById('signupUsername').value || undefined;
+                const firstName = document.getElementById('signupFirstName').value || undefined;
+                const lastName = document.getElementById('signupLastName').value || undefined;
                 const email = document.getElementById('signupEmail').value;
                 const password = document.getElementById('signupPassword').value;
                 const location = document.getElementById('signupLocation').value || undefined;
@@ -256,7 +265,8 @@
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({ 
-                            username: username || null,
+                            firstName: firstName || null,
+                            lastName: lastName || null,
                             email, 
                             password,
                             location: location || null

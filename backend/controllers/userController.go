@@ -30,16 +30,21 @@ func CreateUser(c *gin.Context) {
 	}
 
 	userID := uuid.New().String()
-	username := ""
+	firstName := ""
+	lastName := ""
 	location := ""
-	if userDTO.Username != nil {
-		username = *userDTO.Username
+
+	if userDTO.FirstName != nil {
+		firstName = *userDTO.FirstName
+	}
+	if userDTO.LastName != nil {
+		lastName = *userDTO.LastName
 	}
 	if userDTO.Location != nil {
 		location = *userDTO.Location
 	}
 
-	newUser, err := user.NewUser(userID, username, *userDTO.Email, *userDTO.Password, location)
+	newUser, err := user.NewUser(userID, firstName, lastName, *userDTO.Email, *userDTO.Password, location)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -53,7 +58,8 @@ func CreateUser(c *gin.Context) {
 
 	userResp := user.UserResponse{
 		ID:          newUser.ID,
-		Username:    newUser.Username,
+		FirstName:   newUser.FirstName,
+		LastName:    newUser.LastName,
 		Email:       newUser.Email,
 		Location:    newUser.Location,
 		PhoneNumber: newUser.PhoneNumber,
@@ -98,7 +104,8 @@ func LoginUser(c *gin.Context) {
 
 	userResp := user.UserResponse{
 		ID:          existingUser.ID,
-		Username:    existingUser.Username,
+		FirstName:   existingUser.FirstName,
+		LastName:    existingUser.LastName,
 		Email:       existingUser.Email,
 		Location:    existingUser.Location,
 		PhoneNumber: existingUser.PhoneNumber,

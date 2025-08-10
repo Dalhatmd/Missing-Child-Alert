@@ -2,8 +2,9 @@ package controllers
 
 import (
 	"net/http"
-	"github.com/dalhatmd/Missing-Child-Alert/db"
+
 	"github.com/dalhatmd/Missing-Child-Alert/alert"
+	"github.com/dalhatmd/Missing-Child-Alert/db"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )
