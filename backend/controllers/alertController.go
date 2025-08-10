@@ -10,7 +10,7 @@ import (
 
 // CreateAlert handles the creation of a new alert.
 func CreateAlert(c *gin.Context) {
-	var alertDTO alert.AlertDTO // Define AlertDTO in your alert package if not present
+	var alertDTO alert.AlertDTO
 
 	if err := c.ShouldBindJSON(&alertDTO); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

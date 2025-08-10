@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missing Child Alert System - Login/Signup</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e0e0e0;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center p-4 sm:p-6 lg:p-8">
+
+    <!-- Header -->
+    <header class="w-full max-w-4xl bg-white shadow-lg rounded-xl p-6 mb-8 text-center">
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-blue-700 mb-2">Missing Child Alert</h1>
+        <p class="text-lg text-gray-600">Join our community to help find missing children.</p>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="w-full max-w-md">
+
+        <!-- Login Form -->
+        <section id="loginSection" class="bg-white shadow-lg rounded-xl p-6 sm:p-8 mb-4">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 text-center">Login</h2>
+            
+            <!-- Success Message -->
+            <div id="loginSuccess" class="mb-4 p-3 bg-green-100 text-green-700 rounded-lg text-center hidden" role="alert">
+                Login successful! Redirecting...
+            </div>
+            
+            <!-- Error Message -->
+            <div id="loginError" class="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-center hidden" role="alert">
+                Invalid email or password. Please try again.
+            </div>
+
+            <form id="loginForm" class="space-y-6">
+                <!-- Email -->
+                <div>
+                    <label for="loginEmail" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                    <input type="email" id="loginEmail" name="email" placeholder="Enter your email" required
+                           class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-base">
+                </div>
+
+                <!-- Password -->
+                <div>
+                    <label for="loginPassword" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <input type="password" id="loginPassword" name="password" placeholder="Enter your password" required
+                           class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-base">
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit"
+                        class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-lg font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
+                               transition duration-150 ease-in-out">
+                    Login
+                </button>
+            </form>
+
+            <!-- Switch to Signup -->
+            <p class="mt-6 text-center text-sm text-gray-600">
+                Don't have an account? 
+                <button id="showSignup" class="font-medium text-blue-600 hover:text-blue-500 transition duration-150 ease-in-out">
+                    Sign up here
+                </button>
+            </p>
+        </section>
+
+        <!-- Signup Form -->
+        <section id="signupSection" class="bg-white shadow-lg rounded-xl p-6 sm:p-8 mb-4 hidden">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 text-center">Sign Up</h2>
+            
+            <!-- Success Message -->
+            <div id="signupSuccess" class="mb-4 p-3 bg-green-100 text-green-700 rounded-lg text-center hidden" role="alert">
+                Account created successfully! Please login.
+            </div>
+            
+            <!-- Error Message -->
+            <div id="signupError" class="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-center hidden" role="alert">
+                Failed to create account. Please try again.
+            </div>
+
+            <form id="signupForm" class="space-y-6">
+                <!-- Username (Optional) -->
+                <div>
+                    <label for="signupUsername" class="block text-sm font-medium text-gray-700 mb-1">Username (Optional)</label>
+                    <input type="text" id="signupUsername" name="username" placeholder="Choose a username"
+                           class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-base">
+                    <p class="mt-1 text-xs text-gray-500">You can add this later in your profile.</p>
+                </div>
+
+                <!-- Email -->
+                <div>
+                    <label for="signupEmail" class="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
+                    <input type="email" id="signupEmail" name="email" placeholder="Enter your email" required
+                           class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-base">
+                </div>
+
+                <!-- Password -->
+                <div>
+                    <label for="signupPassword" class="block text-sm font-medium text-gray-700 mb-1">Password *</label>
+                    <input type="password" id="signupPassword" name="password" placeholder="Create a password" required
+                           class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-base">
+                    <p class="mt-1 text-xs text-gray-500">Minimum 6 characters recommended.</p>
+                </div>
+
+                <!-- Location (Optional) -->
+                <div>
+                    <label for="signupLocation" class="block text-sm font-medium text-gray-700 mb-1">Location (Optional)</label>
+                    <input type="text" id="signupLocation" name="location" placeholder="Your city/area"
+                           class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-base">
+                    <p class="mt-1 text-xs text-gray-500">You can add this later in your profile.</p>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit"
+                        class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-lg font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500
+                               transition duration-150 ease-in-out">
+                    Create Account
+                </button>
+            </form>
+
+            <!-- Switch to Login -->
+            <p class="mt-6 text-center text-sm text-gray-600">
+                Already have an account? 
+                <button id="showLogin" class="font-medium text-blue-600 hover:text-blue-500 transition duration-150 ease-in-out">
+                    Login here
+                </button>
+            </p>
+        </section>
+
+        <!-- Navigation Link -->
+        <div class="text-center">
+            <a href="index.html" class="inline-flex items-center text-blue-600 hover:text-blue-500 transition duration-150 ease-in-out">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Back to Main Page
+            </a>
+        </div>
+    </main>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:8081';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginSection = document.getElementById('loginSection');
+            const signupSection = document.getElementById('signupSection');
+            const showSignupBtn = document.getElementById('showSignup');
+            const showLoginBtn = document.getElementById('showLogin');
+            
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            
+            const loginSuccess = document.getElementById('loginSuccess');
+            const loginError = document.getElementById('loginError');
+            const signupSuccess = document.getElementById('signupSuccess');
+            const signupError = document.getElementById('signupError');
+
+            // Toggle between login and signup forms
+            showSignupBtn.addEventListener('click', () => {
+                loginSection.classList.add('hidden');
+                signupSection.classList.remove('hidden');
+                clearMessages();
+            });
+
+            showLoginBtn.addEventListener('click', () => {
+                signupSection.classList.add('hidden');
+                loginSection.classList.remove('hidden');
+                clearMessages();
+            });
+
+            // Login form submission
+            loginForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                clearMessages();
+
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+
+                try {
+                    const response = await fetch(`${API_BASE_URL}/login`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ email, password }),
+                    });
+
+                    if (response.ok) {
+                        const userData = await response.json();
+                        loginSuccess.classList.remove('hidden');
+                        
+                        // Store user data in localStorage (in a real app, use proper session management)
+                        localStorage.setItem('user', JSON.stringify(userData));
+                        
+                        // Redirect after a delay
+                        setTimeout(() => {
+                            window.location.href = 'index.html';
+                        }, 1500);
+                    } else {
+                        const errorData = await response.json();
+                        loginError.textContent = errorData.error || 'Login failed. Please try again.';
+                        loginError.classList.remove('hidden');
+                    }
+                } catch (error) {
+                    console.error('Login error:', error);
+                    loginError.textContent = 'Network error. Please check your connection and try again.';
+                    loginError.classList.remove('hidden');
+                }
+            });
+
+            // Signup form submission
+            signupForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                clearMessages();
+
+                const username = document.getElementById('signupUsername').value || undefined;
+                const email = document.getElementById('signupEmail').value;
+                const password = document.getElementById('signupPassword').value;
+                const location = document.getElementById('signupLocation').value || undefined;
+
+                // Basic validation
+                if (password.length < 6) {
+                    signupError.textContent = 'Password must be at least 6 characters long.';
+                    signupError.classList.remove('hidden');
+                    return;
+                }
+
+                try {
+                    const response = await fetch(`${API_BASE_URL}/users`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ 
+                            username: username || null,
+                            email, 
+                            password,
+                            location: location || null
+                        }),
+                    });
+
+                    if (response.ok) {
+                        const userData = await response.json();
+                        signupSuccess.classList.remove('hidden');
+                        signupForm.reset();
+                        
+                        // Switch to login form after successful signup
+                        setTimeout(() => {
+                            signupSection.classList.add('hidden');
+                            loginSection.classList.remove('hidden');
+                            clearMessages();
+                            // Pre-fill email in login form
+                            document.getElementById('loginEmail').value = email;
+                        }, 2000);
+                    } else {
+                        const errorData = await response.json();
+                        signupError.textContent = errorData.error || 'Failed to create account. Please try again.';
+                        signupError.classList.remove('hidden');
+                    }
+                } catch (error) {
+                    console.error('Signup error:', error);
+                    signupError.textContent = 'Network error. Please check your connection and try again.';
+                    signupError.classList.remove('hidden');
+                }
+            });
+
+            function clearMessages() {
+                [loginSuccess, loginError, signupSuccess, signupError].forEach(el => {
+                    el.classList.add('hidden');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

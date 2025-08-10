@@ -17,6 +17,16 @@ const (
 	ClosedStatus AlertStatus = "closed"
 )
 
+type AlertDTO struct {
+    ChildName        string `json:"child_name"`
+    Age              int    `json:"age"`
+    Gender           string `json:"gender"`
+    LastSeenLocation string `json:"last_seen_location"`
+    Description      string `json:"description"`
+    PhotoUrl         string `json:"photo_url"`
+    ReporterContact  string `json:"reporter_contact"`
+    UserId           string `json:"user_id"`
+}
 
 type Alert struct {
 	ID			string 		`gorm:"PrimaryKey" json:"id"`
@@ -46,6 +56,7 @@ type UpdateAlertRequest struct {
 }
 
 func NewAlert(
+			id,
 			childName string,
 			age int,
 			gender string,

@@ -1,20 +1,21 @@
 package user
 
 import (
-	"github.com/dalhatmd/Missing-Child-Alert/alert"
-	"golang.org/x/crypto/bcrypt"
 	"errors"
 	"fmt"
+
+	"github.com/dalhatmd/Missing-Child-Alert/alert"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type User struct {
-	ID       string `json:"id"`
-	Username string `json:"username"`
-	Email    string `json:"email"`
-	PasswordHash string `json:"password"`
-	Location string `json:"location"`
-	PhoneNumber string `json:"phone_number,omitempty"`
-	Alerts []alert.Alert `gorm:"foreignKey:UserId;references:ID" json:"alerts,omitempty"`
+	ID           string        `json:"id"`
+	Username     string        `json:"username"`
+	Email        string        `json:"email"`
+	PasswordHash string        `json:"password"`
+	Location     string        `json:"location"`
+	PhoneNumber  string        `json:"phone_number,omitempty"`
+	Alerts       []alert.Alert `gorm:"foreignKey:UserId;references:ID" json:"alerts,omitempty"`
 }
 
 // newUser creates a new User instance with the provided details.
@@ -32,22 +33,22 @@ func NewUser(id string, username, email, password, location string) (*User, erro
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
 		return nil, fmt.Errorf("failed to hash password: %v", err)
-		}
+	}
 	return &User{
-		ID:       id,
-		Username: username,
-		Email:    email,
+		ID:           id,
+		Username:     username,
+		Email:        email,
 		PasswordHash: string(hashedPassword),
-		Location: location,
+		Location:     location,
 	}, nil
 }
 
 // DTO for User represents the data transfer object for a user.
 type UserDTO struct {
-	Username *string `json:"username"`
-	Email    *string `json:"email"`
-	Password *string `json:"password,omitempty"`
-	Location *string `json:"location"`
+	Username    *string `json:"username"`
+	Email       *string `json:"email"`
+	Password    *string `json:"password,omitempty"`
+	Location    *string `json:"location"`
 	PhoneNumber *string `json:"phone_number,omitempty"`
 }
 
@@ -59,7 +60,7 @@ func (u *User) Update(info UserDTO) error {
 		u.Username = *info.Username
 	}
 	if info.Email != nil {
-		if *info.Email == ""{
+		if *info.Email == "" {
 			return errors.New("Email cannot be empty")
 		}
 		u.Email = *info.Email
@@ -80,3 +81,17 @@ func (u *User) Update(info UserDTO) error {
 	return nil
 }
 
+// CheckPassword compares a hashed password with a plain password.
+func CheckPassword(hashedPassword, password string) error {
+	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
+}
+
+// UserResponse is a safe struct for returning user data in API responses (no password hash).
+type UserResponse struct {
+	ID          string        `json:"id"`
+	Username    string        `json:"username"`
+	Email       string        `json:"email"`
+	Location    string        `json:"location"`
+	PhoneNumber string        `json:"phone_number,omitempty"`
+	Alerts      []alert.Alert `json:"alerts,omitempty"`
+}
